@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    form {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 6px;
+        font-size: large;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 95%;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    input, select, label {
+        padding: 4px;
+        font-size: large;
+        margin: 6px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение игрока</title>
+</head>
+<body>
+<h2>Изменение игрока</h2>
+<form action="#"
+      th:action="@{/update/{id}(id=${player.id})}"
+      th:object="${player}" style="width:100%"
+      method="post">
+    <label for="firstName">Имя</label>
+    <input required type="text" th:field="*{firstName}" id="firstName" placeholder="Имя">
+    <label for="last-name">Фамилия</label>
+    <input required type="text" th:field="*{lastName}" id="last-name" placeholder="Фамилия">
+    <label for="genders">Пол</label>
+    <select id="genders" th:field="${player.gender}">
+        <option th:each="gender : ${genders}" th:value="${gender.name}" th:text="${gender.name}"></option>
+    </select>
+    <label for="birth-date">Дата рождения</label>
+    <input required type="date" th:field="*{birthDate}" id="birth-date" placeholder="Дата рождения">
+    <label for="team">Команда</label>
+    <input required list="team-list" th:field="${player.teamName}" id="team">
+    <datalist id="team-list">
+        <option th:each="team : ${teams}" th:value="${team.name}">
+    </datalist>
+    <label for="countries">Страна</label>
+    <select id="countries" th:field="${player.countryName}">
+        <option th:each="country : ${countries}" th:value="${country.name}" th:text="${country.name}"></option>
+    </select>
+    <input type="submit" value="Сохранить изменения">
+</form>
+<p><a href="/">Список игроков</a></p>
+</body>
+</html>

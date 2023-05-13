@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+        table-layout: auto;
+        font-size: large;
+    }
+    body {
+        padding: 10px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Список иргоков</title>
+</head>
+<body>
+<div th:switch="${players}">
+    <h2 th:case="null">Игроков нет, добавьте их</h2>
+    <div th:case="*">
+        <h2>Список игроков</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Пол</th>
+                <th>Дата рождения</th>
+                <th>Команда</th>
+                <th>Страна</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="player : ${players}">
+                <td th:text="${player.firstName}"></td>
+                <td th:text="${player.lastName}"></td>
+                <td th:text="${player.gender.name}"></td>
+                <td th:text="${#dates.format(player.birthDate,'dd-MM-yyyy')}"></td>
+                <td th:text="${player.team.name}"></td>
+                <td th:text="${player.country.name}"></td>
+                <td><a th:href="@{/edit/{id}(id=${player.id})}">Изменить</a></td>
+                <td><a th:href="@{/delete/{id}(id=${player.id})}">Удалить</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/add-player">Добавить ирока</a></p>
+</div>
+</body>
+</html>
